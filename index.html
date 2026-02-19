@@ -1,11 +1,1161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sistema Solar Interactivo | Mini Proyecto</title>
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ================ VARIABLES Y RESET ================ */
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #00cec9;
+            --dark-bg: #0a0a1f;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --text-light: #ffffff;
+            --text-gray: #dfe6e9;
+            --error-color: #ff7675;
+            --success-color: #00b894;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #0a0a1f 0%, #1a1a3a 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ================ HEADER Y NAVEGACIÓN ================ */
+        .header {
+            background: rgba(10, 10, 31, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        /* ================ MAIN CONTENT ================ */
+        main {
+            margin-top: 80px;
+            padding: 2rem 5%;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 80px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fff, #a8a8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ================ CARRUSEL ================ */
+        .carrusel-section {
+            text-align: center;
+        }
+
+        .carrusel-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .carrusel-wrapper {
+            width: 80%;
+            max-width: 800px;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .carrusel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carrusel-slide {
+            min-width: 100%;
+            height: 450px; /* Un poco más de altura para el 3D */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, #1a1a3a 0%, #0a0a1f 100%);
+        }
+
+        /* Estilo específico para el modelo */
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            --poster-color: transparent;
+        }
+
+        .carrusel-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.8));
+        }
+
+        .carrusel-slide h3 {
+            position: absolute;
+            top: 20px;
+            z-index: 10;
+            pointer-events: none; /* Para que no interfiera al girar el planeta */
+        }
+
+        .carrusel-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carrusel-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .carrusel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* Tarjeta de información */
+        .planeta-info-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            max-width: 600px;
+            margin: 2rem auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .planeta-info-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .planeta-datos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .dato-item {
+            background: rgba(255,255,255,0.05);
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .dato-item strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        /* ================ TABLA ================ */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .planetas-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .planetas-table th {
+            background: rgba(108, 92, 231, 0.3);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .planetas-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .planetas-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* ================ VIDEO ================ */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ================ FORMULARIO ================ */
+        .formulario-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+
+        input, select, textarea {
+            padding: 0.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        input.error, select.error, textarea.error {
+            border-color: var(--error-color);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            min-height: 20px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn-submit, .btn-reset {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-submit {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-mensaje {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .form-mensaje.success {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .form-mensaje.error {
+            background: rgba(255, 118, 117, 0.2);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+
+        /* ================ OBSERVACIONES ================ */
+        .observaciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .observacion-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .observacion-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .observacion-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .observacion-card p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .observacion-card .fecha {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.5rem;
+        }
+
+        .no-data {
+            text-align: center;
+            color: var(--text-gray);
+            padding: 2rem;
+        }
+
+        /* ================ FOOTER ================ */
+        .footer {
+            background: rgba(10, 10, 31, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* ================ RESPONSIVE ================ */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .carrusel-wrapper {
+                width: 100%;
+            }
+            
+            .carrusel-slide {
+                height: 300px;
+            }
+            
+            .carrusel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .carrusel-slide {
+                height: 250px;
+            }
+            
+            .form-buttons {
+                flex-direction: column;
+            }
+            
+            .planeta-info-card h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <!-- HEADER con navegación -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <h1>🌌 COSMIC CAROUSEL</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#inicio" class="active">Inicio</a></li>
+                <li><a href="#carrusel">Carrusel</a></li>
+                <li><a href="#planetas">Planetas</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- SECCIÓN INICIO -->
+        <section id="inicio" class="inicio-section">
+            <h2 class="section-title">🚀 Bienvenido al Viaje Cósmico</h2>
+            <div class="planeta-info-card" style="text-align: center;">
+                <p style="font-size: 1.2rem;">Explora los misterios de nuestro sistema solar a través de este carrusel interactivo. Descubre datos fascinantes sobre cada planeta y comparte tus observaciones con nosotros.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN CARRUSEL PRINCIPAL -->
+        <section id="carrusel" class="carrusel-section">
+            <h2 class="section-title">🌠 Viaje por el Sistema Solar</h2>
+            
+            <!-- Controles del carrusel -->
+            <div class="carrusel-container">
+                <button class="carrusel-btn prev" id="prevBtn" aria-label="Anterior">❮</button>
+                
+                <div class="carrusel-wrapper">
+                    <div class="carrusel-slides" id="carruselSlides">
+                        <!-- Los slides se generan dinámicamente con JS -->
+                    </div>
+                </div>
+                
+                <button class="carrusel-btn next" id="nextBtn" aria-label="Siguiente">❯</button>
+            </div>
+            
+            <!-- Indicadores del carrusel -->
+            <div class="carrusel-indicators" id="carruselIndicators"></div>
+            
+            <!-- Información del planeta actual -->
+            <div class="planeta-info-card" id="planetaInfo">
+                <h3 id="planetaNombre">Mercurio</h3>
+                <p id="planetaDescripcion">El planeta más cercano al Sol</p>
+                <div class="planeta-datos" id="planetaDatos"></div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE PLANETAS (TABLA) -->
+        <section id="planetas" class="planetas-section">
+            <h2 class="section-title">📊 Datos Planetarios</h2>
+            <div class="table-responsive">
+                <table class="planetas-table" id="tablaPlanetas">
+                    <thead>
+                        <tr>
+                            <th>Planeta</th>
+                            <th>Distancia al Sol (km)</th>
+                            <th>Diámetro (km)</th>
+                            <th>Temperatura (°C)</th>
+                            <th>Lunas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaBody">
+                        <!-- Se llena con JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE VIDEO -->
+        <section class="video-section">
+            <h2 class="section-title">🎥 Explora el Universo</h2>
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ledSv40DTBs" 
+                        title="Sistema Solar" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <!-- FORMULARIO OBLIGATORIO -->
+        <section id="contacto" class="formulario-section">
+            <h2 class="section-title">📝 Registro de Observación</h2>
+            <form id="observacionForm" class="observacion-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo:</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required>
+                        <span class="error-message" id="errorNombre"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+                        <span class="error-message" id="errorEmail"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edad">Edad:</label>
+                        <input type="number" id="edad" name="edad" min="1" max="120" required>
+                        <span class="error-message" id="errorEdad"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="planetaFavorito">Planeta favorito:</label>
+                        <select id="planetaFavorito" name="planetaFavorito" required>
+                            <option value="">Selecciona un planeta</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="mensaje">¿Qué te gustaría observar?:</label>
+                        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Describe tu interés astronómico..." required></textarea>
+                        <span class="error-message" id="errorMensaje"></span>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terminos" name="terminos" required>
+                            Acepto los términos y condiciones de observación
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn-submit">Enviar Registro</button>
+                    <button type="reset" class="btn-reset">Limpiar</button>
+                </div>
+                
+                <!-- Mensaje de éxito/error -->
+                <div id="formMensaje" class="form-mensaje"></div>
+            </form>
+        </section>
+
+        <!-- LISTA DE OBSERVACIONES (Datos del formulario) -->
+        <section id="observaciones" class="observaciones-section">
+            <h2 class="section-title">📋 Registros Recientes</h2>
+            <div id="observacionesLista" class="observaciones-grid">
+                <!-- Se llena con JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Cosmic Carousel - Proyecto Educativo</p>
+            <div class="footer-links">
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Términos de Uso</a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+    <script>
+        // ================ DATOS DE LOS PLANETAS ================
+        const planetasData = [
+            {
+                id: 1,
+                nombre: "La Luna", // Ejemplo con tu archivo
+                descripcion: "Tu descripción aquí...",
+                distancia: "384,400",
+                diametro: "3,474",
+                temperatura: "-173 a 127",
+                lunas: 0,
+                modelo: "luna.glb" // EL NOMBRE DE TU ARCHIVO
+            },
+            {
+                id: 2,
+                nombre: "Saturno",
+                descripcion: "Famoso por sus hermosos anillos de hielo y roca.",
+                distancia: "1,433 millones",
+                diametro: "116,460",
+                temperatura: "-140",
+                lunas: 83,
+                modelo: "saturno.glb" // EL NOMBRE DE TU ARCHIVO
+            },
+            {
+                id: 3,
+                nombre: "Neptuno",
+                descripcion: "El planeta más ventoso, con vientos de hasta 2,100 km/h.",
+                distancia: "4,498 millones",
+                diametro: "49,244",
+                temperatura: "-200",
+                lunas: 14,
+                modelo: "neptune.glb" // EL NOMBRE DE TU ARCHIVO
+            }/* ,
+            {
+                id: 2,
+                nombre: "Venus",
+                descripcion: "El planeta más caliente debido a su densa atmósfera de CO2.",
+                distancia: "108.2 millones",
+                diametro: "12,104",
+                temperatura: "462",
+                lunas: 0,
+                imagen: "https://images.unsplash.com/photo-1614313913007-2d4f0e8f6f9d?w=800&auto=format"
+            },
+            {
+                id: 3,
+                nombre: "Tierra",
+                descripcion: "Nuestro hogar, el único planeta conocido con vida.",
+                distancia: "149.6 millones",
+                diametro: "12,742",
+                temperatura: "15",
+                lunas: 1,
+                imagen: "https://images.unsplash.com/photo-1614732414444-096e5f1122e1?w=800&auto=format"
+            },
+            {
+                id: 4,
+                nombre: "Marte",
+                descripcion: "El planeta rojo, con el volcán más grande del sistema solar.",
+                distancia: "227.9 millones",
+                diametro: "6,779",
+                temperatura: "-65",
+                lunas: 2,
+                imagen: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c0?w=800&auto=format"
+            },
+            {
+                id: 5,
+                nombre: "Júpiter",
+                descripcion: "El planeta más grande, con una Gran Mancha Roja tormentosa.",
+                distancia: "778.5 millones",
+                diametro: "139,820",
+                temperatura: "-110",
+                lunas: 79,
+                imagen: "https://images.unsplash.com/photo-1614314107185-f9b9e7a8b9e5?w=800&auto=format"
+            },
+            {
+                id: 7,
+                nombre: "Urano",
+                descripcion: "Gira de lado, con un eje de rotación extremadamente inclinado.",
+                distancia: "2,877 millones",
+                diametro: "50,724",
+                temperatura: "-195",
+                lunas: 27,
+                imagen: "https://images.unsplash.com/photo-1614314107185-f9b9e7a8b9e5?w=800&auto=format"
+            },
+             */
+        ];
+
+        // ================ ARRAY PARA OBSERVACIONES ================
+        let observaciones = [];
+
+        // ================ CLASE CARRUSEL ================
+        class Carrusel {
+            constructor() {
+                this.currentIndex = 0;
+                this.slidesContainer = document.getElementById('carruselSlides');
+                this.indicatorsContainer = document.getElementById('carruselIndicators');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                
+                this.init();
+            }
+            
+            init() {
+                this.renderSlides();
+                this.renderIndicators();
+                this.updateInfo();
+                this.setupEventListeners();
+                this.startAutoPlay();
+            }
+            
+            renderSlides() {
+                const slidesHTML = planetasData.map(planeta => `
+                    <div class="carrusel-slide">
+                        <h3>${planeta.nombre}</h3>
+                        <model-viewer 
+                            src="${planeta.modelo}" 
+                            alt="Modelo 3D de ${planeta.nombre}"
+                            auto-rotate 
+                            camera-controls 
+                            shadow-intensity="1"
+                            rotation-per-second="30deg"
+                            touch-action="pan-y">
+                        </model-viewer>
+                    </div>
+                `).join('');
+                
+                this.slidesContainer.innerHTML = slidesHTML;
+            }
+            
+            renderIndicators() {
+                const indicatorsHTML = planetasData.map((_, index) => `
+                    <span class="indicator ${index === 0 ? 'active' : ''}" data-index="${index}"></span>
+                `).join('');
+                
+                this.indicatorsContainer.innerHTML = indicatorsHTML;
+            }
+            
+            updateInfo() {
+                const planeta = planetasData[this.currentIndex];
+                document.getElementById('planetaNombre').textContent = planeta.nombre;
+                document.getElementById('planetaDescripcion').textContent = planeta.descripcion;
+                
+                const datosHTML = `
+                    <div class="dato-item">
+                        <strong>Distancia:</strong> ${planeta.distancia} km
+                    </div>
+                    <div class="dato-item">
+                        <strong>Diámetro:</strong> ${planeta.diametro} km
+                    </div>
+                    <div class="dato-item">
+                        <strong>Temperatura:</strong> ${planeta.temperatura}°C
+                    </div>
+                    <div class="dato-item">
+                        <strong>Lunas:</strong> ${planeta.lunas}
+                    </div>
+                `;
+                
+                document.getElementById('planetaDatos').innerHTML = datosHTML;
+            }
+            
+            goToSlide(index) {
+                if (index < 0) index = planetasData.length - 1;
+                if (index >= planetasData.length) index = 0;
+                
+                this.currentIndex = index;
+                this.slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+                
+                document.querySelectorAll('.indicator').forEach((ind, i) => {
+                    ind.classList.toggle('active', i === index);
+                });
+                
+                this.updateInfo();
+            }
+            
+            nextSlide() {
+                this.goToSlide(this.currentIndex + 1);
+            }
+            
+            prevSlide() {
+                this.goToSlide(this.currentIndex - 1);
+            }
+            
+            setupEventListeners() {
+                this.prevBtn.addEventListener('click', () => this.prevSlide());
+                this.nextBtn.addEventListener('click', () => this.nextSlide());
+                
+                document.querySelectorAll('.indicator').forEach(indicator => {
+                    indicator.addEventListener('click', (e) => {
+                        const index = parseInt(e.target.dataset.index);
+                        this.goToSlide(index);
+                    });
+                });
+            }
+            
+            startAutoPlay() {
+                setInterval(() => this.nextSlide(), 5000);
+            }
+        }
+
+        // ================ TABLA DE PLANETAS ================
+        function renderTablaPlanetas() {
+            const tbody = document.getElementById('tablaBody');
+            const rowsHTML = planetasData.map(planeta => `
+                <tr>
+                    <td>${planeta.nombre}</td>
+                    <td>${planeta.distancia}</td>
+                    <td>${planeta.diametro}</td>
+                    <td>${planeta.temperatura}</td>
+                    <td>${planeta.lunas}</td>
+                </tr>
+            `).join('');
+            
+            tbody.innerHTML = rowsHTML;
+        }
+
+        // ================ CLASE FORMULARIO ================
+        class FormularioManager {
+            constructor() {
+                this.form = document.getElementById('observacionForm');
+                this.selectPlaneta = document.getElementById('planetaFavorito');
+                this.mensajeDiv = document.getElementById('formMensaje');
+                
+                this.init();
+            }
+            
+            init() {
+                this.cargarPlanetasEnSelect();
+                this.setupEventListeners();
+            }
+            
+            cargarPlanetasEnSelect() {
+                const optionsHTML = planetasData.map(planeta => 
+                    `<option value="${planeta.nombre}">${planeta.nombre}</option>`
+                ).join('');
+                
+                this.selectPlaneta.innerHTML += optionsHTML;
+            }
+            
+            setupEventListeners() {
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                this.form.addEventListener('reset', () => this.handleReset());
+                
+                document.getElementById('nombre').addEventListener('blur', (e) => this.validarCampo(e.target));
+                document.getElementById('email').addEventListener('blur', (e) => this.validarCampo(e.target));
+                document.getElementById('edad').addEventListener('blur', (e) => this.validarCampo(e.target));
+                document.getElementById('mensaje').addEventListener('blur', (e) => this.validarCampo(e.target));
+            }
+            
+            validarCampo(campo) {
+                const valor = campo.value.trim();
+                const errorSpan = document.getElementById(`error${campo.id.charAt(0).toUpperCase() + campo.id.slice(1)}`);
+                
+                campo.classList.remove('error');
+                errorSpan.textContent = '';
+                
+                if (!valor) {
+                    campo.classList.add('error');
+                    errorSpan.textContent = 'Este campo es obligatorio';
+                    return false;
+                }
+                
+                if (campo.id === 'email') {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(valor)) {
+                        campo.classList.add('error');
+                        errorSpan.textContent = 'Email no válido';
+                        return false;
+                    }
+                }
+                
+                if (campo.id === 'edad') {
+                    const edad = parseInt(valor);
+                    if (isNaN(edad) || edad < 1 || edad > 120) {
+                        campo.classList.add('error');
+                        errorSpan.textContent = 'Edad debe ser entre 1 y 120';
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            validarTerminos() {
+                const terminos = document.getElementById('terminos');
+                if (!terminos.checked) {
+                    this.mostrarMensaje('Debes aceptar los términos y condiciones', 'error');
+                    return false;
+                }
+                return true;
+            }
+            
+            handleSubmit(e) {
+                e.preventDefault();
+                
+                const campos = ['nombre', 'email', 'edad', 'mensaje'];
+                let isValid = true;
+                
+                campos.forEach(campoId => {
+                    const campo = document.getElementById(campoId);
+                    if (!this.validarCampo(campo)) {
+                        isValid = false;
+                    }
+                });
+                
+                if (!this.validarTerminos()) {
+                    isValid = false;
+                }
+                
+                if (!isValid) return;
+                
+                const observacion = {
+                    id: Date.now(),
+                    nombre: document.getElementById('nombre').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    edad: parseInt(document.getElementById('edad').value),
+                    planetaFavorito: document.getElementById('planetaFavorito').value,
+                    mensaje: document.getElementById('mensaje').value.trim(),
+                    fecha: new Date().toLocaleString()
+                };
+                
+                observaciones.push(observacion);
+                
+                this.mostrarMensaje('¡Registro exitoso! Gracias por tu observación.', 'success');
+                
+                renderObservaciones();
+                
+                this.form.reset();
+            }
+            
+            handleReset() {
+                document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+                document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('error'));
+                this.mensajeDiv.textContent = '';
+                this.mensajeDiv.className = 'form-mensaje';
+            }
+            
+            mostrarMensaje(texto, tipo) {
+                this.mensajeDiv.textContent = texto;
+                this.mensajeDiv.className = `form-mensaje ${tipo}`;
+                
+                setTimeout(() => {
+                    this.mensajeDiv.textContent = '';
+                    this.mensajeDiv.className = 'form-mensaje';
+                }, 5000);
+            }
+        }
+
+        // ================ OBSERVACIONES ================
+        function renderObservaciones() {
+            const container = document.getElementById('observacionesLista');
+            
+            if (observaciones.length === 0) {
+                container.innerHTML = '<p class="no-data">No hay observaciones registradas aún.</p>';
+                return;
+            }
+            
+            const ultimasObservaciones = [...observaciones].reverse().slice(0, 6);
+            
+            const cardsHTML = ultimasObservaciones.map(obs => `
+                <div class="observacion-card">
+                    <h4>${obs.nombre}</h4>
+                    <p><strong>Edad:</strong> ${obs.edad} años</p>
+                    <p><strong>Planeta favorito:</strong> ${obs.planetaFavorito}</p>
+                    <p><strong>Interés:</strong> ${obs.mensaje.substring(0, 50)}${obs.mensaje.length > 50 ? '...' : ''}</p>
+                    <p class="fecha">📅 ${obs.fecha}</p>
+                </div>
+            `).join('');
+            
+            container.innerHTML = cardsHTML;
+        }
+
+        // ================ INICIALIZACIÓN ================
+        document.addEventListener('DOMContentLoaded', () => {
+            new Carrusel();
+            renderTablaPlanetas();
+            new FormularioManager();
+            
+            observaciones = [
+                {
+                    id: 1,
+                    nombre: "Ana Martínez",
+                    email: "ana@email.com",
+                    edad: 28,
+                    planetaFavorito: "Saturno",
+                    mensaje: "Me encantaría observar los anillos de Saturno con más detalle.",
+                    fecha: "2026-02-15 10:30"
+                },
+                {
+                    id: 2,
+                    nombre: "Carlos López",
+                    email: "carlos@email.com",
+                    edad: 35,
+                    planetaFavorito: "Marte",
+                    mensaje: "Interesado en las misiones a Marte y su potencial para vida.",
+                    fecha: "2026-02-16 15:45"
+                }
+            ];
+            
+            renderObservaciones();
+            
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            window.addEventListener('scroll', () => {
+                const sections = document.querySelectorAll('section');
+                const navLinks = document.querySelectorAll('.nav-menu a');
+                
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
