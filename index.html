@@ -7,6 +7,7 @@
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    
     <style>
         /* ================ VARIABLES Y RESET ================ */
         :root {
@@ -816,6 +817,7 @@
                 this.indicatorsContainer = document.getElementById('carruselIndicators');
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
+                this.autoPlayInterval = null; // Variable para controlar el tiempo
                 
                 this.init();
             }
@@ -901,19 +903,45 @@
             }
             
             setupEventListeners() {
-                this.prevBtn.addEventListener('click', () => this.prevSlide());
-                this.nextBtn.addEventListener('click', () => this.nextSlide());
-                
-                document.querySelectorAll('.indicator').forEach(indicator => {
-                    indicator.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.dataset.index);
-                        this.goToSlide(index);
-                    });
+                this.prevBtn.addEventListener('click', () => {
+                    this.prevSlide();
+                    this.resetAutoPlay(); // Reinicia el tiempo si el usuario cambia manualmente
                 });
+
+                this.nextBtn.addEventListener('click', () => {
+                    this.nextSlide();
+                    this.resetAutoPlay();
+                });
+
+                // DETECTAR INTERACCIÓN CON EL MODELO 3D
+                const modelos = document.querySelectorAll('model-viewer');
+                modelos.forEach(modelo => {
+                    // Cuando el usuario toca o hace clic en el planeta
+                    modelo.addEventListener('mousedown', () => this.stopAutoPlay());
+                    modelo.addEventListener('touchstart', () => this.stopAutoPlay(), {passive: true});
+                    
+                    // Opcional: Reiniciar el carrusel cuando dejen de tocarlo
+                    // modelo.addEventListener('mouseup', () => this.startAutoPlay());
+                });
+                
+                
             }
             
             startAutoPlay() {
-                setInterval(() => this.nextSlide(), 5000);
+                // Evitamos crear múltiples intervalos
+                if (this.autoPlayInterval) return; 
+                this.autoPlayInterval = setInterval(() => this.nextSlide(), 5000);
+            }
+
+            stopAutoPlay() {
+                clearInterval(this.autoPlayInterval);
+                this.autoPlayInterval = null;
+                console.log("Carrusel pausado por interacción 3D");
+            }
+
+            resetAutoPlay() {
+                this.stopAutoPlay();
+                this.startAutoPlay();
             }
         }
 
