@@ -75,7 +75,8 @@
         }
 
         .menu-item.active {
-            background: #f39041;
+            background: #f3914180;
+            boder
         }
 
         .menu-preview {
@@ -120,8 +121,8 @@
             right: 0;
             top: 50%;
             margin: auto;
-            width: 800px;
-            height: 800px;
+            width: 925px;
+            height: 925px;
             transition: transform 1s ease;
             opacity: 0.3;
             transform: translateZ(0px) translateY(-50%) scale(0.8);
@@ -140,7 +141,6 @@
 
         .planet.active {
             opacity: 1;
-            border-color: #f39041;
             box-shadow: 0 0 50px rgba(243,144,65,0.3);
         }
 
@@ -397,16 +397,18 @@
         @media (max-width: 480px) {
             .planet-menu { 
                 left: 5px; 
-                top: 30%;
+                top: 10%;
             }
             .menu-preview { width: 24px; height: 24px; }
             .menu-info h2 { font-size: 9px; }
-            .planet-description { left: 30%; top: 20%; }
+            .planet-description { left: 49%; top: 40%; }
             .moon-card { transform: scale(0.5); }
             .planet {
-                left: -12%;
+                left: 3%;
                 right: 0%;
                 top: 33%;
+                width: 450px;
+                height: 450px ;
             
             }
         }
