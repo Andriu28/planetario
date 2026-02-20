@@ -11,6 +11,18 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --mercury: #E8927C;
+            --venus: #b45d15;
+            --earth: #3d7caf;
+            --mars: #e55f45;
+            --jupiter: rgb(168, 162, 127);
+            --saturn: #b29d81;
+            --uranus: #8dcdd8;
+            --neptune: #4f83e2;
+            --pluto: #927a68;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: #050510;
@@ -70,13 +82,23 @@
             padding: 8px 12px;
             margin-bottom: 5px;
             background: rgba(0,0,0,0.5);
-            border: 1px solid #333;
+            border: 4px solid #333;
             border-radius: 30px;
         }
 
+        .menu-item.mercury.active{ border-color: var(--mercury); }
+        .menu-item.venus.active { border-color: var(--venus); }
+        .menu-item.earth.active { border-color: var(--earth); }
+        .menu-item.mars.active { border-color: var(--mars); }
+        .menu-item.jupiter.active { border-color: var(--jupiter); }
+        .menu-item.saturn.active { border-color: var(--saturn); }
+        .menu-item.uranus.active { border-color: var(--uranus); }
+        .menu-item.neptune.active { border-color: var(--neptune); }
+        .menu-item.pluto.active { border-color: var(--pluto); }
+
         .menu-item.active {
-            background: #f3914180;
-            boder
+            background: rgba(255,255,255,0.25);
+            border-color: #f39041;
         }
 
         .menu-preview {
@@ -166,10 +188,21 @@
         }
 
         .planet-description h1 {
-            font-size: 36px;
-            color: #f39041;
+            font-size: 38px;
+           
             margin-bottom: 10px;
         }
+
+        /* Colores específicos por planeta para el título dentro de la descripción */
+        .planet.mercury .planet-description h1 { color: var(--mercury); }
+        .planet.venus .planet-description h1 { color: var(--venus); }
+        .planet.earth .planet-description h1 { color: var(--earth); }
+        .planet.mars .planet-description h1 { color: var(--mars); }
+        .planet.jupiter .planet-description h1 { color: var(--jupiter); }
+        .planet.saturn .planet-description h1 { color: var(--saturn); }
+        .planet.uranus .planet-description h1 { color: var(--uranus); }
+        .planet.neptune .planet-description h1 { color: var(--neptune); }
+        .planet.pluto .planet-description h1 { color: var(--pluto); }
 
         .planet-description a {
             display: inline-block;
@@ -377,7 +410,7 @@
 
         @media (max-width: 768px) {
             .header-nav { display: none; }
-            .planet-menu { width: 120px; }
+            
             .observaciones-grid { grid-template-columns: 1fr; }
             .form-grid { grid-template-columns: 1fr; }
             .form-group.full-width { grid-column: span 1; }
@@ -430,6 +463,7 @@
         <div class="planet-menu">
             <div class="menu-item mercury active" data-planet="mercury">
                 <div class="menu-preview"></div>
+                <span class="pip"></span>
                 <span>MERCURIO</span>
             </div>
             <div class="menu-item venus" data-planet="venus">
