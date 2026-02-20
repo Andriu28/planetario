@@ -147,7 +147,7 @@
         /* Descripción del planeta */
         .planet-description {
             position: absolute;
-            top: 30%;
+            top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 500px;
@@ -465,82 +465,89 @@
         </div>
 
         <div class="solar">
-            <div class="planets-layer">
-                <!-- Planetas con etiquetas IMG en lugar de background-image -->
-                <div class="planet mercury active" data-planet="mercury">
-                    <img src="imagenes/mercurio.jpg" alt="Mercurio">
-                    <div class="planet-description">
-                        <h1>MERCURIO</h1>
-                        <p>El planeta más cercano al Sol. Un año dura solo 88 días.</p>
-                        <a class="read-more" data-planet="mercury">LEER MÁS</a>
-                    </div>
-                </div>
-                <div class="planet venus" data-planet="venus">
-                    <img src="imagenes/venus.jpg" alt="Venus">
-                    <div class="planet-description">
-                        <h1>VENUS</h1>
-                        <p>El planeta más caliente. Su día dura más que su año.</p>
-                        <a class="read-more" data-planet="venus">LEER MÁS</a>
-                    </div>
-                </div>
-                <div class="planet earth" data-planet="earth">
-                    <img src="imagenes/tierra.jpg" alt="Tierra">
-                    <div class="planet-description">
-                        <h1>TIERRA</h1>
-                        <p>Nuestro hogar. El único planeta con vida conocida.</p>
-                        <a class="read-more" data-planet="earth">LEER MÁS</a>
-                    </div>
-                </div>
-                <div class="planet mars" data-planet="mars">
-                    <img src="imagenes/marte.jpg" alt="Marte">
-                    <div class="planet-description">
-                        <h1>MARTE</h1>
-                        <p>El planeta rojo, hogar del Monte Olimpo.</p>
-                        <a class="read-more" data-planet="mars">LEER MÁS</a>
-                    </div>
-                </div>
-                <div class="planet jupiter" data-planet="jupiter">
-                    <img src="imagenes/jupiter.jpg" alt="Júpiter">
-                    <div class="planet-description">
-                        <h1>JÚPITER</h1>
-                        <p>El gigante del sistema solar. Tiene 79 lunas.</p>
-                        <a class="read-more" data-planet="jupiter">LEER MÁS</a>
-                    </div>
-                </div>
-                <div class="planet saturn" data-planet="saturn">
-                    <img src="imagenes/saturno.jpg" alt="Saturno">
-                    <div class="planet-description">
-                        <h1>SATURNO</h1>
-                        <p>Señor de los anillos. Flotaría en agua.</p>
-                        <a class="read-more" data-planet="saturn">LEER MÁS</a>
-                    </div>
-                </div>
-                <div class="planet uranus" data-planet="uranus">
-                    <img src="imagenes/urano.jpg" alt="Urano">
-                    <div class="planet-description">
-                        <h1>URANO</h1>
-                        <p>El gigante de hielo inclinado. Gira de lado.</p>
-                        <a class="read-more" data-planet="uranus">LEER MÁS</a>
-                    </div>
-                </div>
-                <div class="planet neptune" data-planet="neptune">
-                    <img src="imagenes/neptuno.jpg" alt="Neptuno">
-                    <div class="planet-description">
-                        <h1>NEPTUNO</h1>
-                        <p>El planeta más ventoso. Descubierto por matemáticas.</p>
-                        <a class="read-more" data-planet="neptune">LEER MÁS</a>
-                    </div>
-                </div>
-                <div class="planet pluto" data-planet="pluto">
-                    <img src="imagenes/pluton.png" alt="Plutón">
-                    <div class="planet-description">
-                        <h1>PLUTÓN</h1>
-                        <p>Planeta enano del Cinturón de Kuiper. Tiene 5 lunas.</p>
-                        <a class="read-more" data-planet="pluto">LEER MÁS</a>
-                    </div>
-                </div>
+    <div class="planets-layer">
+        <div class="planet mercury active" data-planet="mercury">
+            <img src="imagenes/mercurio.jpg" alt="Mercurio">
+            <div class="planet-description">
+                <h1>MERCURIO</h1>
+                <p>El mensajero de hierro. Es el planeta más pequeño y denso; a pesar de su cercanía al Sol, posee hielo en cráteres donde nunca llega la luz.</p>
+                <a class="read-more" data-planet="mercury">LEER MÁS</a>
             </div>
         </div>
+
+        <div class="planet venus" data-planet="venus">
+            <img src="imagenes/venus.jpg" alt="Venus">
+            <div class="planet-description">
+                <h1>VENUS</h1>
+                <p>El gemelo infernal. Su densa atmósfera de ácido sulfúrico atrapa el calor, creando temperaturas de 460°C, suficientes para derretir el plomo.</p>
+                <a class="read-more" data-planet="venus">LEER MÁS</a>
+            </div>
+        </div>
+
+        <div class="planet earth" data-planet="earth">
+            <img src="imagenes/tierra.jpg" alt="Tierra">
+            <div class="planet-description">
+                <h1>TIERRA</h1>
+                <p>El oasis cósmico. Es el único mundo conocido con agua líquida en su superficie y un campo magnético que nos protege de la radiación solar.</p>
+                <a class="read-more" data-planet="earth">LEER MÁS</a>
+            </div>
+        </div>
+
+        <div class="planet mars" data-planet="mars">
+            <img src="imagenes/marte.jpg" alt="Marte">
+            <div class="planet-description">
+                <h1>MARTE</h1>
+                <p>El desierto carmesí. Alberga el Monte Olimpo, el volcán más grande del sistema solar, y antiguos valles que sugieren un pasado con ríos y lagos.</p>
+                <a class="read-more" data-planet="mars">LEER MÁS</a>
+            </div>
+        </div>
+
+        <div class="planet jupiter" data-planet="jupiter">
+            <img src="imagenes/jupiter.jpg" alt="Júpiter">
+            <div class="planet-description">
+                <h1>JÚPITER</h1>
+                <p>El rey de los planetas. Este gigante gaseoso es tan grande que podría contener a todos los demás planetas dentro de él dos veces.</p>
+                <a class="read-more" data-planet="jupiter">LEER MÁS</a>
+            </div>
+        </div>
+
+        <div class="planet saturn" data-planet="saturn">
+            <img src="imagenes/saturno.jpg" alt="Saturno">
+            <div class="planet-description">
+                <h1>SATURNO</h1>
+                <p>La joya del sistema solar. Sus icónicos anillos están hechos de billones de fragmentos de hielo y roca que brillan intensamente bajo la luz solar.</p>
+                <a class="read-more" data-planet="saturn">LEER MÁS</a>
+            </div>
+        </div>
+
+        <div class="planet uranus" data-planet="uranus">
+            <img src="imagenes/urano.jpg" alt="Urano">
+            <div class="planet-description">
+                <h1>URANO</h1>
+                <p>El gigante de hielo. Es el único planeta que rota de lado, posiblemente debido a una colisión colosal con un objeto del tamaño de la Tierra.</p>
+                <a class="read-more" data-planet="uranus">LEER MÁS</a>
+            </div>
+        </div>
+
+        <div class="planet neptune" data-planet="neptune">
+            <img src="imagenes/neptuno.jpg" alt="Neptuno">
+            <div class="planet-description">
+                <h1>NEPTUNO</h1>
+                <p>El mundo de los vientos eternos. Sus tormentas alcanzan velocidades supersónicas y es el primer planeta cuya existencia fue predicha mediante cálculos físicos.</p>
+                <a class="read-more" data-planet="neptune">LEER MÁS</a>
+            </div>
+        </div>
+
+        <div class="planet pluto" data-planet="pluto">
+            <img src="imagenes/pluton.png" alt="Plutón">
+            <div class="planet-description">
+                <h1>PLUTÓN</h1>
+                <p>El centinela del Cinturón de Kuiper. Posee un gran glaciar de nitrógeno en forma de corazón y montañas de hielo de agua tan duras como la roca.</p>
+                <a class="read-more" data-planet="pluto">LEER MÁS</a>
+            </div>
+        </div>
+    </div>
+</div>
 
         <div class="scroll-indicator" onclick="document.getElementById('planetas').scrollIntoView({behavior: 'smooth'})">
             EXPLORAR ▼
@@ -604,7 +611,7 @@
                     </div>
                 </div>
                 <div style="text-align: center; margin-top: 2rem;">
-                    <button type="submit" class="btn-submit">Enviar Registro</button>
+                    <button type="submit" class="btn-submit">Enviar</button>
                     <button type="reset" class="btn-reset">Limpiar</button>
                 </div>
                 <div id="formMensaje" style="margin-top: 1rem; text-align: center;"></div>
