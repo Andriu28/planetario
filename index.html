@@ -348,14 +348,26 @@
             grid-column: span 2;
         }
 
-        input, select, textarea {
+        input:not([type="checkbox"]), 
+        select, 
+        textarea {
             width: 100%;
             padding: 0.8rem;
             background: #0a0a1f;
             border: 1px solid #333;
             color: white;
             border-radius: 5px;
+            outline: none; /* Opcional: elimina el borde resaltado por defecto */
         }
+
+        /* Estilo opcional para cuando el usuario hace clic (focus) */
+        input:not([type="checkbox"]):focus, 
+        select:focus, 
+        textarea:focus {
+            border-color: #6c5ce7; /* Usa tu color primario del proyecto */
+            box-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
+        }
+
 
         .checkbox-label {
             display: flex;
@@ -643,7 +655,7 @@
                     <div class="form-group full-width">
                         <label class="checkbox-label">
                             <input type="checkbox" id="terminos" required>
-                            Acepto los términos y condiciones
+                            <p>Acepto los términos y condiciones</p>
                         </label>
                     </div>
                 </div>
