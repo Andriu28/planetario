@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Solar</title>
+    <!-- conecta la hoja de estilos -->
    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- 
+        Muestra el logo y enlaces de navegación interna que desplazan 
+        la página suavemente a las secciones correspondientes (usando href="#id"). 
+
+            *- Cambiar el texto de los enlaces: se verá diferente, pero seguirán funcionando si mantienes los href.
+            *- Alterar los href: los enlaces pueden dejar de llevar a la sección correcta o no hacer nada.
+     -->
     <header class="main-header">
         <div class="header-logo">
             <h1>SOLARIS</h1>
@@ -17,6 +25,15 @@
             <a href="#observaciones">OBSERVACIONES</a>
         </nav>
     </header>
+
+    <!-- 
+        Lista de iconos de cada planeta. La clase active resalta el planeta actualmente visible.
+        el atributo data-planet="mercury" se usa en JavaScript para saber qué planeta se ha seleccionado. 
+
+            *-Cambiar el valor de data-planet: el enlace con el planeta correspondiente se romperá (JS no podrá encontrar la imagen asociada).
+            *-Quitar la clase active de un elemento: al cargar la página no habrá ningún planeta preseleccionado; no mostrando ninguno hasta que el usuario haga clic.
+            *-Añadir o quitar elementos del menú: deberás también añadir o quitar sus paneles y sus imágenes en la sección .planets-layer para mantener coherencia.
+    -->
 
     <section id="inicio" class="hero-section">
         <div class="planet-menu">
@@ -58,6 +75,13 @@
             </div>
         </div>
 
+        <!-- 
+        Muestra la imagen y descripción del planeta activo. Solo un planeta tiene la clase active a la vez (gracias a JS).
+
+            *- Cambiar la ruta de src: la imagen no se cargará.
+            *- Alterar el texto de la descripción: se mostrará el nuevo texto.
+            *- Mover o eliminar el data-planet del botón: el panel no se abrirá al hacer clic.
+        -->
         <div class="solar">
             <div class="planets-layer">
                 <div class="planet mercury active" data-planet="mercury">
@@ -143,6 +167,11 @@
             </div>
         </div>
 
+        <!-- 
+        Al hacer clic, desliza la página hasta la sección #planetas (comportamiento suave gracias a scrollIntoView).
+
+            *- Cambiar el selector dentro de scrollIntoView hará que el clic lleve a otra sección o a ninguna si el ID no existe.
+        -->
         <div class="scroll-indicator" onclick="document.getElementById('planetas').scrollIntoView({behavior: 'smooth'})">
             EXPLORAR ▼
         </div>
@@ -162,12 +191,22 @@
                         <th>Lunas</th>
                     </tr>
                 </thead>
+                <!-- 
+                El tbody está vacío; será llenado dinámicamente por JavaScript con datos de los planetas.
+                    *- Cambiar el id del tbody: JS no encontrará el elemento y la tabla quedará vacía.
+                    *- Añadir columnas en <thead>: deberás también modificar el JS para que genere celdas coherentes.
+                -->
                 <tbody id="tablaBody"></tbody>
             </table>
         </div>
 
         <h2 class="section-title">Video Educativo</h2>
         <div class="video-container">
+        <!-- 
+        Reproduce un video local.   
+            *- Cambiar la ruta: el video no se cargará (pantalla en negro o error).
+            *- Eliminar el elemento: desaparecerá el video.
+        -->
         <video controls width="100%" height="auto">
             <source src="assets/Sistema solar.mp4" type="video/mp4">
             Tu navegador no soporta el elemento de video.
@@ -176,6 +215,9 @@
 
         <h2 class="section-title" id="observaciones">Registro de Observaciones</h2>
         <div class="formulario-section">
+            <!-- 
+            Recoge datos del usuario. El select se llena con opciones de planetas mediante JS. Al enviar, JS intercepta el evento y muestra un mensaje.
+            -->
             <form id="observacionForm">
                 <div class="form-grid">
                     <div class="form-group">
@@ -214,7 +256,9 @@
                 <div id="formMensaje" style="margin-top: 1rem; text-align: center;"></div>
             </form>
         </div>
-
+        <!-- 
+        Contenedor donde JS mostrará las observaciones enviadas
+        -->
         <div id="observacionesLista" class="observaciones-grid"></div>
     </section>
 
@@ -233,7 +277,7 @@
     <div class="info-panel" id="panel-uranus"><span class="close-panel">&times;</span><h2>URANO</h2><p>Gira de lado con una inclinación de 98 grados. Fue el primer planeta descubierto con telescopio.</p></div>
     <div class="info-panel" id="panel-neptune"><span class="close-panel">&times;</span><h2>NEPTUNO</h2><p>El planeta más ventoso. Fue descubierto gracias a cálculos matemáticos antes de ser observado.</p></div>
     <div class="info-panel" id="panel-pluto"><span class="close-panel">&times;</span><h2>PLUTÓN</h2><p>Planeta enano con 5 lunas. Caronte es tan grande que ambos orbitan alrededor de un punto en el espacio.</p></div>
-
+    <!-- conecta el javascript -->
     <script src="js/script.js"></script>
 </body>
 </html>
