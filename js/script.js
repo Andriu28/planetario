@@ -46,7 +46,7 @@ function showPlanet(planetId) {
         var diff = planetIndex - targetIndex;
         
         // Aplicar transformación
-        /* planet.style.transform = 'translateZ(' + (-diff * spacing) + 'px) translateY(-50%) scale(0.8)'; */
+         planet.style.transform = 'translateZ(' + (-diff * spacing) + 'px) translateY(-50%) scale(0.8)'; 
         
         // Activar/desactivar clase
         if(planet.getAttribute('data-planet') === planetId) {
