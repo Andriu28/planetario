@@ -27,6 +27,10 @@ body {
     overflow-x: hidden;
 }
 
+.label {
+    margin-bottom: 5px;
+}
+
 /* Header */
 .main-header {
     position: fixed;
@@ -138,7 +142,7 @@ body {
     position: absolute;
     left: 0;
     right: 0;
-    top: 50%;
+    top: 46%;
     margin: auto;
     width: 925px;
     height: 925px;
@@ -182,7 +186,7 @@ body {
 .planet.jupiter.active { box-shadow: 0 0 50px rgb(234 182 117 / 40%), 0 30px 40px rgba(0, 0, 0, 0.8); }
 .planet.saturn.active { box-shadow: 0 0 50px rgb(234 182 117 / 40%), 0 30px 40px rgba(0, 0, 0, 0.8); }
 .planet.uranus.active { box-shadow: 0 0 50px rgb(96 196 236 / 40%), 0 30px 40px rgba(0, 0, 0, 0.8);}
-.planet.neptune.active { box-shadow: 0 0 50px rgb(96 196 236 / 40%), 0 30px 40px rgba(0, 0, 0, 0.8);}
+.planet.neptune.active { box-shadow: 0 0 50px rgba(83, 135, 231, 0.4), 0 30px 40px rgba(0, 0, 0, 0.8);}
 .planet.pluto.active { box-shadow: 0 0 50px rgb(128 128 128 / 40%), 0 30px 40px rgba(0, 0, 0, 0.8);}
 
 /* Descripción del planeta */
@@ -327,9 +331,18 @@ body {
 .planetas-table th,
 .planetas-table td {
     padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #333;
+    text-align: left;  
 }
+
+.planetas-table th {
+    border: 1px solid #ca724f41;
+}
+
+.planetas-table td {
+    border: 1px solid #333333b6;
+}
+
+
 
 .planetas-table th {
     background: #f39041;
@@ -359,7 +372,7 @@ body {
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
 .form-group.full-width {
@@ -373,6 +386,7 @@ textarea {
     padding: 0.8rem;
     background: #0a0a1f;
     border: 1px solid #333;
+    margin-top: 5px;
     color: white;
     border-radius: 5px;
     outline: none; /* Opcional: elimina el borde resaltado por defecto */
@@ -394,7 +408,7 @@ textarea:focus {
 }
 
 .btn-submit, .btn-reset {
-    padding: 1rem 2rem;
+    padding: 0.8rem 1.7rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -458,22 +472,50 @@ textarea:focus {
     .moon-card { transform: scale(0.7); transform-origin: left top; }
 }
 @media (max-width: 480px) {
-    .planet-menu { 
-        left: 5px; 
-        top: 10%;
-        width: 130px;
-    }
-    .menu-preview { width: 15px; height: 15px; }
-    .menu-info h2 { font-size: 9px; }
-    .menu-item span { font-size: 14px; }
-    .planet-description { left: 49%; top: 40%; }
-    .moon-card { transform: scale(0.5); }
     .planet {
-        left: 1%;
+        left: -15%;
         right: 0%;
         top: 33%;
         width: 520px;
         height: 520px ;
-    
     }
+    .planet-menu { 
+        left: 5px; 
+        top: 10%;
+        width: 95px;
+    }
+    .planet-description { left: 53%; top: 45%; }
+    .menu-preview { width: 15px; height: 15px; }
+    .menu-info h2 { font-size: 9px; }
+    .menu-item span { font-size: 10px; }
+    .menu-item { 
+        gap: 7px;
+        padding: 4px 6px;
+        margin-bottom: 7px;
+
+    }
+    .moon-card { transform: scale(0.5); }
+    .planetas-table{
+        font-size: 10px;
+    }
+    .planetas-table th{
+        border: 1px solid #ca724f41;
+    }
+
+    .planetas-table td{
+        border: 1px solid #3333338e;
+    }
+    .planetas-table th,
+    .planetas-table td {
+        padding: 0.7rem 0.5rem;
+        text-align: left;
+        
+    }
+    .form-group label{
+        font-size: 14px;
+    }
+    .form-group input,select{
+        padding: 0.7rem;
+    }
+    
 }
